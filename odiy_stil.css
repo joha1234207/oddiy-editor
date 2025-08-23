@@ -1,0 +1,96 @@
+/* Umumiy sozlamalar*/
+* { box-sizing: border-box; margin: 0; padding:0;}
+body {
+	font-family: Arial, sans-serif;
+	background: #0d0d0d;
+	color: #fff;
+	padding: 20px;
+}
+/*Sarlavha*/
+.section-title {
+	margin-bottom: 20px;
+	color: #00ffe9;
+	text-shadow: 0 0 10px rgba(0,255,231,0.6);
+}
+
+h1 {
+	color: lightblue;
+	text-shadow: 0 0 10px rgba(0,255,231,0.6);
+	text-align: center;
+}
+/*Kartochka*/
+.card {
+	background: #1a1a1a;
+	border-radius: 16px;
+	padding: 18px;
+	margin-bottom: 30px;
+	box-shadow: 0 4px 24px rgba(0,255,20,.18);
+	opacity: 0;
+	transform: translateY(40PX);
+	animation: fadeUp 0.8s forwards;
+}
+.card:nth-child(1) 
+{ animation-delay: 0.2s;}
+.card:nth-child(2)
+{ animation-delay: 0.4s;}
+.card:nth-child(3)
+{ animation-delay: 0.4s;}
+
+@keyframes fadeUp {
+	to { opacity: 1; transform: translateY(0);}
+}
+/*linklar*/
+.links-container { display: flex; flex-wrap: wrap; gap: 12px;}
+.link-card {
+	background: #252525;
+	border: 2px solid #00ff9a;
+	border-radius: 12px;
+	padding: 10px 14px;
+	transition: transform .2s, box-shadow .2s, background-color.2s;
+}
+.link-card a { color: #00ff9a; text-decoration: none; font-weight: bold; }
+.link-card:hover { transform: translateY(-4px); background: #00ff9a17; box-shadow: 0 0 14px rgba(0,255,154,.45);}
+
+/*Video kartochkasi*/
+.video-card { text-align: center;}
+.video-card h3 { margin-bottom: 10px; color: #00ffd5; }
+.video-card video {
+	width: 100%;
+	max-height: 420px;
+	border-radius: 12px;
+	border: 2px solid #00ff9a;
+	margin-bottom: 10px;
+	transition: transform .25, box-shadow .25;
+	animation: glow 2s infinite alternate;
+}
+.video-card video:hover { transform: scale(1.01): box-shadow: 0 0 24px rgba(0,255,154,.4);}
+
+.video-desc { color: #cfcfcf; font-size: .95rem; margin-bottom: 8px; }
+
+/*Tugmalar*/
+.video-action { display: flex; justify-content: center; gap: 12px; }
+.btn {
+	padding: 10px 16px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	font-weight: 700;
+	transition: transform.18s, box-shadow.22s;
+}
+.btn:active { transform: scale(.98); }
+
+/*Yuklab olish*/
+.download-btn { background: #00ff9a; color: #000; }
+.download-btn:hover { box-shadow: 0 0 16px #00ff9a; }
+
+/*Like tugmasi*/
+.like-btn {
+	background: #ff0044; color: #fff;
+	display: inline-flex; align-items: center; gap: 8px;
+}
+.like-btn.liked { background: #ff66a3; box-shadow: 0 0 20px #ff66a3; animation: pop .3s ease; }
+.like-count { min-width: 24px; display: inline-block; text-align: right; }
+
+/*Animatsiyalar*/
+@keyframes pop { 50% { transform:scale(1.2); } 100% {transform: scale(1); } }
+@keyframes glow { from { box-shadow: 0 0 10px #00ff9a; } to { box-shadow: 0 0 25px #00ffd5; } }
