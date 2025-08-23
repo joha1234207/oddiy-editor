@@ -1,1 +1,109 @@
-
+<!DOCTYPE html>
+<html lang="uz">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width , inital-scale=1.0">
+		<title>oddiy_editor</title>
+		<link rel="stylesheet" href="odiy_stil.css">
+	</head>
+	<body>
+		<h1>oddiy_editor</h1>
+		<h2 class="section-title">foydali linklar</h2>
+		<div id="links-container"></div>
+		
+		<h2 class="section-title">Videolar</h2>
+		<div id="videos-root"></div>
+		<template id="video-card-tpl">
+			<div class="card video-card">
+				<h3 class="video-title"></h3>
+				<video class="video-el" controls playsinline preload="metadata">
+				<source class="video-src" src="" type="video/mp4">
+				sizning brazueringiz video tagini qo'llab quvatlamaydi"
+				</video>
+				<p class="video-desc">video haqida malumot</p>
+				<div class="video-actions">
+					<a class="btn download-btn" target="_blank">YUKLAB OLISH</a>
+					<button class="btn like-btn" type="button">YOQDI</button>
+					<span class="like-count">0</span>
+				</div>
+			</div>
+		</template>
+		<script>
+			/*---LINkS---*/
+		const links = [
+			{ text: "instagram profil", url: "url yozamzn"},
+			{ text: "Telegram: WEB sahifaga  buyurtma berish kanali", url: "url yozaman"},
+			{ text: "Tog'ridan to'ri buyurtma berish", url: "url yozaman"}
+		];
+		const linksContainer = document.getElementById("links-container");
+		links.forEach(link => {
+			const div = document.createElement("div");
+			div.className = "link-card";
+			const a = document.createElement("a");
+			a.href = link.url; 
+			a.textContent = link.text; a.target="_blank";
+			div.appendChild(a);
+			linksContainer.appendChild(div);
+		});
+		/*-videolar*/
+		const videos = [
+			{title: "Avtor - oddiy_editor", src: "video_1.MP4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 4959 },
+			{title: "Avtor - oddiy_editor", src: "video_2.MP4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 70099 },
+			{title: "Avtor - oddiy_editor", src: "video_3.mp4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 13459 },
+			{title: "Avtor - oddiy_editor", src: "video_4.mp4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 3396 },
+			{title: "Avtor - oddiy_editor", stc: "video_5.mp4", desc: "Yoqqan bol'sa yoqdi tugmasini bosib keting", likes: 4987 },
+			{title: "Avtor - oddiy_editor", src: "video_6.MP4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 4959 },
+			{title: "Avtor - oddiy_editor", src: "video_7.MP4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 7099 },
+			{title: "Avtor - oddiy_editor", src: "video_8.mp4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 1359 },
+			{title: "Avtor - oddiy_editor", src: "video_9.mp4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 3376 },
+			{title: "Avtor - oddiy_editor", stc: "video_10.mp4", desc: "Yoqqan bol'sa yoqdi tugmasini bosib keting", likes: 4987 },
+			{title: "Avtor - oddiy_editor", src: "video_11.mp4", desc: "Yoqqan bo'lsa yoqdi tugmasini bosib keting", likes: 3776 },
+			];
+		//random tartib
+		function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+		const randomVideos = shuffle(videos);
+		
+		const videosRoot = document.getElementById("videos-root");
+		const tpl = document.getElementById("video-card-tpl");
+		function createVideoCard(item, index){
+			const node = tpl.content.cloneNode(true);
+		node.querySelector(".video-title").textContent = item.title;
+		node.querySelector(".video-desc").textContent = item.desc;
+			const source = node.querySelector(".video-src");
+			source.src = item.src;
+		source.type = "video/mp4";
+			const video = node.querySelector(".video-el");
+			video.dataset.index = index;
+			const dl = node.querySelector(".download-btn");
+			dl.href = item.src;
+		dl.download="";
+			const likeBtn = node.querySelector(".like-btn");
+			const likeCountEl = node.querySelector(".like-count");
+			likeCountEl.textContent = item.likes;
+			likeBtn.dataset.index =index;
+			return node;
+		}
+		//Videolarni sahifaga qo'yish
+		randomVideos.forEach((v,i) => videosRoot.appendChild(createVideoCard(v,i)));
+		//like bosish
+		videosRoot.addEventListener("click" , (e)=>{
+			const btn = e.target.closest(".like-btn");
+			if(!btn) return;
+			const i = Number(btn.dataset.index);
+			const liked = btn.classList.toggle("liked");
+			videos[i].likes += liked?1:-1;
+		btn.querySelector(".like-count").textContent = videos[i].likes;
+		});
+		//Autoplay ixtiyoriy
+		const observer = new IntersectionObserver(entries=>{
+			entries.forEach(entry=>{
+				const video = entry.target;
+				if(entry.isIntersecting)
+		{ video.play().catch(()=>{}); }
+			else{ video.pause(); }
+		});
+		},{ threshold: 0.6 });
+		document.querySelectorAll(".video-el").forEach(v=>observer.observe(v));
+		</script>
+	</body>
+</html>.
